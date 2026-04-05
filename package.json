@@ -6,6 +6,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc",
+    "build:frontend": "webpack --mode production",
+    "dev:frontend": "webpack --mode development --watch",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "simulate": "ts-node src/index.ts --simulate"
@@ -20,9 +22,13 @@
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^25.5.0",
+    "html-webpack-plugin": "^5.6.6",
     "jest": "^30.3.0",
     "ts-jest": "^29.4.9",
+    "ts-loader": "^9.5.7",
     "ts-node": "^10.9.2",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "webpack": "^5.105.4",
+    "webpack-cli": "^7.0.2"
   }
 }

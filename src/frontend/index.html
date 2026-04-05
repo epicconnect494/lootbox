@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LootBox - Try Your Luck!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ─── Top Bar ──────────────────────────────────────────────── -->
+  <header id="top-bar">
+    <div class="logo">
+      <span class="logo-icon">🎰</span>
+      <span class="logo-text">LOOT<span class="accent">BOX</span></span>
+    </div>
+    <div class="balance-display">
+      <span class="balance-label">BALANCE</span>
+      <span id="balance-amount" class="balance-amount">$20.00</span>
+    </div>
+  </header>
+
+  <!-- ─── Main Container ──────────────────────────────────────── -->
+  <main id="app">
+    <!-- ─── Lootbox Display ──────────────────────────────────── -->
+    <section id="lootbox-section">
+      <div id="box-container" class="box-container">
+        <div class="box-glow"></div>
+        <div class="box-body" id="lootbox">
+          <div class="box-lid" id="box-lid">
+            <div class="lid-shine"></div>
+          </div>
+          <div class="box-base">
+            <div class="box-question">?</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="cost-badge" class="cost-badge">
+        <span class="cost-icon">🎟️</span>
+        <span>$2.00 per spin</span>
+      </div>
+    </section>
+
+    <!-- ─── Reel Section ─────────────────────────────────────── -->
+    <section id="reel-section" class="reel-section hidden">
+      <div class="reel-frame">
+        <div class="reel-pointer"></div>
+        <div class="reel-window">
+          <div id="reel-strip" class="reel-strip">
+            <!-- Prize items injected dynamically -->
+          </div>
+        </div>
+        <div class="reel-edge left"></div>
+        <div class="reel-edge right"></div>
+      </div>
+    </section>
+
+    <!-- ─── Prize Result ─────────────────────────────────────── -->
+    <section id="result-section" class="result-section hidden">
+      <div id="result-card" class="result-card">
+        <div class="result-tier-badge" id="result-tier"></div>
+        <div class="result-icon" id="result-icon"></div>
+        <h2 id="result-name" class="result-name"></h2>
+        <p id="result-value" class="result-value"></p>
+        <div class="result-actions">
+          <button id="btn-collect" class="btn btn-collect">
+            <span class="btn-icon">🎁</span>
+            <span>Collect Prize</span>
+          </button>
+          <button id="btn-sell" class="btn btn-sell">
+            <span class="btn-icon">💰</span>
+            <span id="sell-label">Sell for $0.00</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Action Button ────────────────────────────────────── -->
+    <section id="action-section">
+      <button id="btn-spin" class="btn btn-spin">
+        <span class="spin-text">OPEN LOOTBOX</span>
+        <span class="spin-cost">$2.00</span>
+      </button>
+    </section>
+
+    <!-- ─── Stats Bar ────────────────────────────────────────── -->
+    <section id="stats-section">
+      <div class="stat">
+        <span class="stat-label">Spins</span>
+        <span id="stat-spins" class="stat-value">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Spent</span>
+        <span id="stat-spent" class="stat-value">$0.00</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Won</span>
+        <span id="stat-won" class="stat-value">$0.00</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Inventory</span>
+        <span id="stat-inventory" class="stat-value">0</span>
+      </div>
+    </section>
+
+    <!-- ─── History ──────────────────────────────────────────── -->
+    <section id="history-section">
+      <h3 class="section-title">Recent Spins</h3>
+      <div id="history-list" class="history-list">
+        <p class="history-empty">No spins yet. Try your luck!</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ─── Particles canvas ───────────────────────────────────── -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- ─── Notification Toast ─────────────────────────────────── -->
+  <div id="toast" class="toast hidden"></div>
+</body>
+</html>
