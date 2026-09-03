@@ -6,7 +6,7 @@ import { registerUser } from "@/domain/users";
 import { createSession, csrfCookieOptions, sessionCookieOptions } from "@/lib/auth";
 import { config } from "@/lib/config";
 
-export const POST = route({ auth: "none", body: registerBody, rateLimit: { max: 10, windowSec: 600 } }, async ({ body, ip, req }) => {
+export const POST = route({ auth: "none", body: registerBody, rateLimit: { max: 30, windowSec: 600 } }, async ({ body, ip, req }) => {
   const db = getDb();
   const u = await registerUser(db, { email: body.email, password: body.password, displayName: body.displayName, jurisdictionCode: body.jurisdictionCode ?? null, dateOfBirth: body.dateOfBirth ? new Date(body.dateOfBirth) : null });
   const sess = await createSession(db, u.id, { ip, userAgent: req.headers.get("user-agent") });

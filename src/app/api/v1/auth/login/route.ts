@@ -8,7 +8,7 @@ import { config } from "@/lib/config";
 import { err } from "@/lib/errors";
 import { keyedHash } from "@/lib/crypto";
 
-export const POST = route({ auth: "none", body: loginBody, rateLimit: { max: 20, windowSec: 300 } }, async ({ body, ip, req }) => {
+export const POST = route({ auth: "none", body: loginBody, rateLimit: { max: 60, windowSec: 300 } }, async ({ body, ip, req }) => {
   const db = getDb();
   const u = await authenticate(db, body.email, body.password);
   if (!u) {
