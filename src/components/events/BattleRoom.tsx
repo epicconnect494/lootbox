@@ -86,6 +86,14 @@ export function BattleRoom({ initial, viewerUserId }: { initial: BattleView; vie
     });
   }, [id, refetch]);
 
+  // Polling fallback while the battle is not terminal: a missed SSE event can never strand the room.
+  const terminal = view.battle.status === "SETTLED" || view.battle.status === "VOIDED" || view.battle.status === "CANCELLED";
+  useEffect(() => {
+    if (terminal) return;
+    const t = setInterval(() => void refetch(), 4000);
+    return () => clearInterval(t);
+  }, [terminal, refetch]);
+
   const { battle, rules, seats, sequence } = view;
   const crazy = battle.mode === "CRAZY";
   const viewerSeated = seats.some((s) => s.isViewer);
