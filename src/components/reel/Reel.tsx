@@ -132,11 +132,16 @@ export function Reel({ openingId, outcomes, winner, speed = "NORMAL", autoplay =
 
   useEffect(() => {
     if (skipAnimation) {
-      setOffset(finalOffset());
-      return;
+      // Resume path: position the settled item under the indicator on the next frame (no animation).
+      rafRef.current = requestAnimationFrame(() => setOffset(finalOffset()));
+      return () => {
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      };
     }
-    if (autoplay && phase === "idle") spin();
+    let kick: number | null = null;
+    if (autoplay && phase === "idle") kick = requestAnimationFrame(() => spin());
     return () => {
+      if (kick) cancelAnimationFrame(kick);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

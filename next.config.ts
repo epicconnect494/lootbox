@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ["pg", "ioredis"],
   typedRoutes: false,
+  agentRules: false,
   async headers() {
     return [
       {

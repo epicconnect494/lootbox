@@ -15,6 +15,8 @@ export default defineConfig({
     baseURL,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
+    // Use a pre-installed Chromium when provided (e.g. PW_CHROMIUM=/opt/pw-browsers/chromium) instead of downloading one.
+    launchOptions: process.env.PW_CHROMIUM ? { executablePath: process.env.PW_CHROMIUM } : undefined,
   },
   projects: [
     { name: "mobile", use: { ...devices["iPhone 13"], browserName: "chromium" } },

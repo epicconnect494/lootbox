@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { and, eq, sql } from "drizzle-orm";
 import type { Db } from "./client";
 import * as s from "./schema";
@@ -96,8 +95,6 @@ export async function seedUsers(db: Db) {
 }
 
 type ItemSpec = { name: string; sku: string; grader?: string; grade?: string; cert?: string; condition?: string; size?: string; serial?: string; cost: string; value: string; sellback: string; accent: string; image?: string };
-
-const ACCENTS = ["violet", "cyan", "amber", "rose", "emerald", "slate"];
 
 async function ensureSku(db: Db, cat: typeof s.category.$inferSelect, spec: { sku: string; name: string; brand?: string; isUnique: boolean; pooledQuantity?: number; value: string; sellback: string; accent: string; shippingRestricted?: boolean; note?: string; image?: string }) {
   const existing = await db.query.productSku.findFirst({ where: eq(s.productSku.sku, spec.sku) });
