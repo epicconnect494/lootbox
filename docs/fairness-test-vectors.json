@@ -1,0 +1,154 @@
+{
+  "description": "Deterministic provably-fair test vectors. message = clientSeed:nonce:scopeId:manifestHash; digest = HMAC-SHA256(key=serverSeedHex, message); index via rejection sampling over 32-bit big-endian windows (extension digests = HMAC(serverSeed, message:ext)). Raffles use publicRandomness as clientSeed and raffleId as scopeId; winners drawn without replacement by incrementing nonce.",
+  "algorithmVersion": 1,
+  "openings": [
+    {
+      "serverSeed": "0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f",
+      "clientSeed": "collector-seed",
+      "nonce": 0,
+      "packVersionId": "11111111-1111-4111-8111-111111111111",
+      "manifestHash": "b6fd458a7205924b78c0b1bcc6730fc69ee72e093dd49f56e106479057f9441d",
+      "remainingQuantities": [
+        1,
+        9,
+        90
+      ],
+      "serverSeedHash": "7152f9958a983e3313fb2498d743af1e83a0ff5999650fd341f0368d1678992c",
+      "message": "collector-seed:0:11111111-1111-4111-8111-111111111111:b6fd458a7205924b78c0b1bcc6730fc69ee72e093dd49f56e106479057f9441d",
+      "digest": "ce3e8dd18c3e2e1696612f72af7dd26d465f61ea7ff8c32399a3cf5117094b59",
+      "range": 100,
+      "limit": 4294967200,
+      "samplingSteps": [
+        {
+          "extension": 0,
+          "window": 0,
+          "value": 3460206033,
+          "accepted": true
+        }
+      ],
+      "selectedIndex": 33,
+      "outcomePosition": 2
+    },
+    {
+      "serverSeed": "a3b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f60718293a4b5c6d7e8f9",
+      "clientSeed": "x",
+      "nonce": 41,
+      "packVersionId": "22222222-2222-4222-8222-222222222222",
+      "manifestHash": "6dec476472bd90854057c2a67a6bc6dc639bdc9ae4c4516ef5886bbacba1d82e",
+      "remainingQuantities": [
+        0,
+        3,
+        7,
+        40
+      ],
+      "serverSeedHash": "df744901d1d034d554c5c3fcdef525af1ae4e3d547de6995df7f9676c9ee130a",
+      "message": "x:41:22222222-2222-4222-8222-222222222222:6dec476472bd90854057c2a67a6bc6dc639bdc9ae4c4516ef5886bbacba1d82e",
+      "digest": "f0602d6c1efdf7fea64f2829f603e49dd0028e065681384b648df26f8a2697a5",
+      "range": 50,
+      "limit": 4294967250,
+      "samplingSteps": [
+        {
+          "extension": 0,
+          "window": 0,
+          "value": 4032834924,
+          "accepted": true
+        }
+      ],
+      "selectedIndex": 24,
+      "outcomePosition": 3
+    },
+    {
+      "serverSeed": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "clientSeed": "edge",
+      "nonce": 999999,
+      "packVersionId": "33333333-3333-4333-8333-333333333333",
+      "manifestHash": "593c1699223be76194c93ffbf6dcb78269ae7e3b3e8cabe22b87e533f78c3eda",
+      "remainingQuantities": [
+        1
+      ],
+      "serverSeedHash": "df0790f236013511e91fa4532fb7761f62320a51a3868dabf4a13fe5f53e3263",
+      "message": "edge:999999:33333333-3333-4333-8333-333333333333:593c1699223be76194c93ffbf6dcb78269ae7e3b3e8cabe22b87e533f78c3eda",
+      "digest": "4c9361cdac945dbb4a9b5b77c4c68ad212263bab0a3b86d34179750fd49b6545",
+      "range": 1,
+      "limit": 4294967296,
+      "samplingSteps": [
+        {
+          "extension": 0,
+          "window": 0,
+          "value": 1284727245,
+          "accepted": true
+        }
+      ],
+      "selectedIndex": 0,
+      "outcomePosition": 0
+    }
+  ],
+  "raffles": [
+    {
+      "serverSeed": "5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e",
+      "serverSeedHash": "8414cd6b08e92be7f34132d9f8fabaa0cf0f072bab807b434e7ff02efc918a1e",
+      "publicRandomness": "0000000000000000000a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60",
+      "publicRandomnessSource": "test-vector:fixed",
+      "raffleId": "44444444-4444-4444-8444-444444444444",
+      "canonicalManifest": "[\"TKT-0001\",\"TKT-0002\",\"TKT-0003\",\"TKT-0004\",\"TKT-0005\",\"TKT-0006\",\"TKT-0007\",\"TKT-0008\",\"TKT-0009\",\"TKT-0010\",\"TKT-0011\",\"TKT-0012\",\"TKT-0013\",\"TKT-0014\",\"TKT-0015\",\"TKT-0016\",\"TKT-0017\",\"TKT-0018\",\"TKT-0019\",\"TKT-0020\",\"TKT-0021\",\"TKT-0022\",\"TKT-0023\",\"TKT-0024\",\"TKT-0025\"]",
+      "manifestHash": "a82dbac5c8ec13a52e774d48c68189247556e32c39dfe20c029f18be5820a305",
+      "ticketCount": 25,
+      "winnersCount": 1,
+      "winningTickets": [
+        11
+      ],
+      "detail": [
+        {
+          "nonce": 0,
+          "message": "0000000000000000000a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60:0:44444444-4444-4444-8444-444444444444:a82dbac5c8ec13a52e774d48c68189247556e32c39dfe20c029f18be5820a305",
+          "digest": "7e6db63506fba3847c9424085be912184c2480d06d6eb9a44c12e77b1b4c64c2",
+          "index": 10,
+          "ticketNumber": 11,
+          "ticketId": "TKT-0011"
+        }
+      ]
+    },
+    {
+      "serverSeed": "9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c",
+      "serverSeedHash": "17899470c1c81cef1568b05103ad0ef55e81827269810bdd4156c5ff22d07ed1",
+      "publicRandomness": "btc-block-900000:00000000000000000001c8f2e5a6b7c8d9e0f1a2b3c4d5e6f708192a3b4c5d",
+      "publicRandomnessSource": "test-vector:fixed",
+      "raffleId": "55555555-5555-4555-8555-555555555555",
+      "canonicalManifest": "[\"TKT-0001\",\"TKT-0002\",\"TKT-0003\",\"TKT-0004\",\"TKT-0005\",\"TKT-0006\",\"TKT-0007\",\"TKT-0008\",\"TKT-0009\",\"TKT-0010\",\"TKT-0011\",\"TKT-0012\"]",
+      "manifestHash": "bf2193aba75526ac32441ec8fa10472da1922c902a85d41d1458e0b439f4f6b7",
+      "ticketCount": 12,
+      "winnersCount": 3,
+      "winningTickets": [
+        11,
+        2,
+        1
+      ],
+      "detail": [
+        {
+          "nonce": 0,
+          "message": "btc-block-900000:00000000000000000001c8f2e5a6b7c8d9e0f1a2b3c4d5e6f708192a3b4c5d:0:55555555-5555-4555-8555-555555555555:bf2193aba75526ac32441ec8fa10472da1922c902a85d41d1458e0b439f4f6b7",
+          "digest": "cf7a6aca5d58154e0c8cb708293c7f7a26b644b1f4da989c0b2e5c74660cc6b0",
+          "index": 10,
+          "ticketNumber": 11,
+          "ticketId": "TKT-0011"
+        },
+        {
+          "nonce": 1,
+          "message": "btc-block-900000:00000000000000000001c8f2e5a6b7c8d9e0f1a2b3c4d5e6f708192a3b4c5d:1:55555555-5555-4555-8555-555555555555:bf2193aba75526ac32441ec8fa10472da1922c902a85d41d1458e0b439f4f6b7",
+          "digest": "914bf7adcae3ac9818260321abc97ddc51c128f7accc4ecaa49d62e6c6ab430b",
+          "index": 1,
+          "ticketNumber": 2,
+          "ticketId": "TKT-0002"
+        },
+        {
+          "nonce": 2,
+          "message": "btc-block-900000:00000000000000000001c8f2e5a6b7c8d9e0f1a2b3c4d5e6f708192a3b4c5d:2:55555555-5555-4555-8555-555555555555:bf2193aba75526ac32441ec8fa10472da1922c902a85d41d1458e0b439f4f6b7",
+          "digest": "11b6aeb083c9fde75211de3266a9bf6f664cde132fd249ff57b29e105a178733",
+          "index": 0,
+          "ticketNumber": 1,
+          "ticketId": "TKT-0001"
+        }
+      ]
+    }
+  ]
+}

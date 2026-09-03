@@ -1,35 +1,56 @@
 {
   "name": "lootbox",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Authenticated physical collectible pack platform: provably fair openings, vault custody, battles, races and raffles.",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "build": "tsc",
-    "build:frontend": "webpack --mode production",
-    "dev:frontend": "webpack --mode development --watch",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "simulate": "ts-node src/index.ts --simulate"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:reset": "tsx scripts/reset.ts && npm run db:migrate && npm run db:seed",
+    "worker": "tsx scripts/worker.ts",
+    "reconcile": "tsx scripts/reconcile.ts",
+    "openapi": "tsx scripts/gen-openapi.ts",
+    "test": "vitest run --project unit",
+    "test:unit": "vitest run --project unit",
+    "test:integration": "vitest run --project integration",
+    "test:all": "vitest run",
+    "test:e2e": "playwright test",
+    "verify": "npm run typecheck && npm run lint && npm run test:all && npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://local_proxy@127.0.0.1:42261/git/epicconnect494/lootbox"
+  "dependencies": {
+    "drizzle-orm": "^0.45.2",
+    "ioredis": "^5.6.1",
+    "lucide-react": "^1.40.0",
+    "next": "16.3.4",
+    "pg": "^8.23.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "zod": "^4.5.4"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^25.5.0",
-    "html-webpack-plugin": "^5.6.6",
-    "jest": "^30.3.0",
-    "playwright": "^1.59.1",
-    "ts-jest": "^29.4.9",
-    "ts-loader": "^9.5.7",
-    "ts-node": "^10.9.2",
-    "typescript": "^6.0.2",
-    "webpack": "^5.105.4",
-    "webpack-cli": "^7.0.2"
+    "@playwright/test": "^1.62.1",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.15.0",
+    "@types/pg": "^8.15.5",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^9.30.0",
+    "eslint-config-next": "16.3.4",
+    "fast-check": "^4.9.0",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.0",
+    "vitest": "^4.1.11"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

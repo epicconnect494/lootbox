@@ -1,4 +1,13 @@
 node_modules/
+.next/
+out/
 dist/
 coverage/
-*.js.map
+.env
+.env.local
+.env.*.local
+.storage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+next-env.d.ts
