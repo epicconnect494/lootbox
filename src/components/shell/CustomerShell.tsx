@@ -27,14 +27,14 @@ export async function CustomerShell({ children }: { children: React.ReactNode })
   return (
     <div className="flex min-h-dvh">
       {/* Desktop sidebar */}
-      <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col border-r border-white/8 bg-ink-950/70 px-4 py-6 backdrop-blur md:flex" aria-label="Primary">
+      <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col border-r border-white/8 bg-ink-950/70 px-4 py-6 backdrop-blur md:flex" aria-label="Sidebar">
         <Link href="/" className="font-display mb-8 flex items-center gap-2 px-2 text-xl font-extrabold tracking-tight">
           <span className="inline-block h-6 w-6 rounded-md bg-gradient-to-br from-violet-500 to-cyan-400 shadow-[var(--shadow-glow-violet)]" aria-hidden />
           <span>
             Lootbox <span className="text-iris">Vault</span>
           </span>
         </Link>
-        <nav className="flex flex-col gap-1">
+        <nav className="flex flex-col gap-1" aria-label="Primary">
           {PRIMARY.map((n) => (
             <NavLink key={n.href} href={n.href} label={n.label} icon={<n.icon size={18} aria-hidden />} variant="side" />
           ))}

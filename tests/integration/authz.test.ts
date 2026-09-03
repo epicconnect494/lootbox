@@ -65,6 +65,13 @@ describe("authorization matrix for every admin route and role", () => {
     expect(((await noCsrf.json()) as { error: { code: string } }).error.code).toBe("CSRF_FAILED");
   });
 
+  it("idempotent endpoints without a request body do not crash on replay bookkeeping", async () => {
+    const accept = await loadHandler("/sellback/quotes/{id}/accept", "post");
+    const s = sessions.CUSTOMER;
+    const res = await accept(new NextRequest(`http://localhost/api/v1/sellback/quotes/${id}/accept`, { method: "POST", headers: { cookie: s.cookie, "x-csrf-token": s.csrf, "idempotency-key": "no-body-key-1" } }), { params: Promise.resolve({ id }) });
+    expect(res.status).toBe(404); // quote does not exist; must not be a 500
+  });
+
   it("requires an Idempotency-Key on idempotent endpoints and detects body mismatch", async () => {
     const open = await loadHandler("/openings", "post");
     const s = sessions.CUSTOMER;

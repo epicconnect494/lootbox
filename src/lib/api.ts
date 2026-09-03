@@ -42,6 +42,7 @@ export function ok(body: unknown, status = 200): ApiResponse {
 }
 
 function jsonify(v: unknown): unknown {
+  if (v === undefined) return null;
   return JSON.parse(JSON.stringify(v, (_k, val) => (typeof val === "bigint" ? val.toString() : val)));
 }
 

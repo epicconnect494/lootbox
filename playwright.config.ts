@@ -25,10 +25,11 @@ export default defineConfig({
   webServer: process.env.E2E_BASE_URL
     ? undefined
     : {
-        command: `npx next dev -p ${port}`,
+        // e2e runs against a production build (dev-mode hydration is not representative under Turbopack HMR).
+        command: `npx next build && npx next start -p ${port}`,
         url: baseURL,
         reuseExistingServer: !process.env.CI,
-        timeout: 180_000,
+        timeout: 600_000,
         env: { ...process.env, PORT: String(port) },
       },
 });

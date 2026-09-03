@@ -95,15 +95,18 @@ export async function requestMeta(): Promise<{ ip: string | null; userAgent: str
   return { ip, userAgent: h.get("user-agent"), requestId: h.get("x-request-id") ?? randomToken(8) };
 }
 
+/** Secure cookies whenever the app is served over HTTPS (production deployments must set an https APP_URL). */
+const secureCookies = config.appUrl.startsWith("https://");
+
 export function sessionCookieOptions(expiresAt: Date) {
   return {
     httpOnly: true,
     sameSite: "lax" as const,
-    secure: config.isProd,
+    secure: secureCookies,
     path: "/",
     expires: expiresAt,
   };
 }
 export function csrfCookieOptions(expiresAt: Date) {
-  return { httpOnly: false, sameSite: "lax" as const, secure: config.isProd, path: "/", expires: expiresAt };
+  return { httpOnly: false, sameSite: "lax" as const, secure: secureCookies, path: "/", expires: expiresAt };
 }

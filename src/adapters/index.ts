@@ -77,18 +77,22 @@ export interface StorageProvider {
   get(key: string): Promise<Buffer | null>;
   publicUrl(key: string): string;
 }
+function storageDir(): string {
+  return path.resolve(process.cwd(), process.env.LOCAL_STORAGE_DIR ?? ".storage");
+}
 const localStorage: StorageProvider = {
   name: "local",
   async put(key, data) {
-    const dir = process.env.LOCAL_STORAGE_DIR ?? "./.storage";
-    const p = path.join(dir, key);
+    const p = path.join(storageDir(), key);
+    if (!p.startsWith(storageDir())) throw new Error("invalid storage key");
     fs.mkdirSync(path.dirname(p), { recursive: true });
     fs.writeFileSync(p, data);
     return { key };
   },
   async get(key) {
-    const p = path.join(process.env.LOCAL_STORAGE_DIR ?? "./.storage", key);
-    return fs.existsSync(p) ? fs.readFileSync(p) : null;
+    const p = path.join(storageDir(), key);
+    if (!p.startsWith(storageDir())) return null;
+    return fs.existsSync(/* turbopackIgnore: true */ p) ? fs.readFileSync(/* turbopackIgnore: true */ p) : null;
   },
   publicUrl(key) {
     return `/api/v1/media/${encodeURIComponent(key)}`;
