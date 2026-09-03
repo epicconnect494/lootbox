@@ -14,7 +14,8 @@ test("create and join a Crazy Mode battle; lowest total wins and the pink banner
 
   await a.goto("/battles/create");
   await hydrated(a);
-  const packLabel = await a.locator("#pack-picker option", { hasText: "Circuit Clash" }).first().textContent();
+  // Spark Starter has ~1,000 openings so repeated runs never exhaust the finite demo manifests.
+  const packLabel = await a.locator("#pack-picker option", { hasText: "Spark Starter" }).first().textContent();
   await a.locator("#pack-picker").selectOption({ label: packLabel!.trim() });
   await a.getByRole("button", { name: /add round/i }).click();
   await a.getByRole("radiogroup", { name: "Battle mode" }).getByRole("radio", { name: /crazy/i }).click();

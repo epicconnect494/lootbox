@@ -61,7 +61,7 @@ Admin console: `/admin` (visible to any role with `admin.access`).
 | `npm run typecheck`, `npm run lint` | TypeScript, ESLint |
 | `npm run test` | Unit + property tests |
 | `npm run test:integration` | Integration tests against `TEST_DATABASE_URL` (schema is recreated) |
-| `npm run test:e2e` | Playwright, mobile (iPhone 13) + desktop projects. Builds and starts a production server on port 3100 against the seeded `DATABASE_URL`; set `E2E_BASE_URL` to reuse a running server and `PW_CHROMIUM=/path/to/chrome` to use a pre-installed browser instead of `npx playwright install`. |
+| `npm run test:e2e` | Playwright, mobile (iPhone 13) + desktop projects. Builds and starts a production server on port 3100 against the seeded `DATABASE_URL`; set `E2E_BASE_URL` to reuse a running server and `PW_CHROMIUM=/path/to/chrome` to use a pre-installed browser instead of `npx playwright install`. The suite opens real packs, so it consumes demo stock; `npm run db:reset` restores it. |
 | `npm run verify` | typecheck + lint + all vitest projects + production build |
 
 ## What is real
