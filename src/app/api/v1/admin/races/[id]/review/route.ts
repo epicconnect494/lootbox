@@ -1,0 +1,12 @@
+import { route, ok } from "@/lib/api";
+import { idParam } from "@/api/schemas";
+import { getDb } from "@/db/client";
+import { fraudReview } from "@/domain/races";
+import { drainOutbox } from "@/domain/worker";
+
+export const POST = route({ auth: "admin", permission: "races.write", params: idParam }, async ({ params, session }) => {
+  const db = getDb();
+  const result = await fraudReview(db, session!.user.id, params.id);
+  drainOutbox(db, 50).catch(() => undefined);
+  return ok({ result });
+});
