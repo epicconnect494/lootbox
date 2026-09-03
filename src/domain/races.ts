@@ -244,8 +244,13 @@ export async function settleRace(db: Db, actorUserId: string | null, raceId: str
       winners.push({ userId: row.user_id, rank, amountMinor: prize.amountMinor.toString() });
       await enqueueOutbox(tx, "notification.create", { userId: row.user_id, kind: "RACE", title: `${r.name}: you placed #${rank}`, body: `Prize credited to your balance.`, href: "/race" });
     }
-    const summary = { paidMinor: paid.toString(), winners, settledAt: new Date().toISOString() };
-    await tx.update(race).set({ status: "SETTLED", settledAt: new Date(), settlementSummary: summary }).where(eq(race.id, raceId));
+    // Summary always reflects the full ladder actually paid (idempotent re-runs report the same totals).
+    const totals = await tx.execute<{ paid: string }>(sql`SELECT COALESCE(SUM(prize_amount_minor),0)::text AS paid FROM race_standing WHERE race_id = ${raceId}`);
+    const allWinners = await tx.execute<{ user_id: string; rank: number; prize_amount_minor: string }>(sql`SELECT user_id, rank, prize_amount_minor::text FROM race_standing WHERE race_id = ${raceId} AND prize_amount_minor IS NOT NULL ORDER BY rank`);
+    void paid;
+    void winners;
+    const summary = { paidMinor: totals.rows[0].paid, winners: allWinners.rows.map((w) => ({ userId: w.user_id, rank: Number(w.rank), amountMinor: w.prize_amount_minor })), settledAt: r.settledAt?.toISOString() ?? new Date().toISOString() };
+    await tx.update(race).set({ status: "SETTLED", settledAt: r.settledAt ?? new Date(), settlementSummary: summary }).where(eq(race.id, raceId));
     await audit(tx, { actorUserId, action: "race.settle", entityType: "race", entityId: raceId, after: summary });
     await enqueueOutbox(tx, "realtime.race", { raceId, type: "settled" }, { type: "race", id: raceId });
     return summary;

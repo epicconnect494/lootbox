@@ -274,12 +274,17 @@ export async function voidBattle(db: Db, adminUserId: string, battleId: string, 
       const [holding] = await tx.select().from(vaultHolding).where(and(eq(vaultHolding.inventoryItemId, item.id), eq(vaultHolding.status, "ACTIVE"))).for("update");
       await tx.update(vaultHolding).set({ status: "VOIDED", endedAt: new Date() }).where(eq(vaultHolding.id, holding.id));
       await tx.insert(ownershipTransfer).values({ inventoryItemId: item.id, fromUserId: item.ownerUserId, toUserId: null, reason: "VOID", referenceType: "battle", referenceId: b.id });
-      const [o] = await tx.select().from(packOutcome).where(eq(packOutcome.id, op.outcomeId));
+      const [o] = await tx.select().from(packOutcome).where(eq(packOutcome.id, op.outcomeId)).for("update");
+      const [pv] = await tx.select().from(packVersion).where(eq(packVersion.id, o.packVersionId)).for("update");
+      const live = pv.status === "PUBLISHED" || pv.status === "PAUSED";
+      // The manifest slot is restored: the physical item returns to stock (re-reserved while the version is live).
+      await tx.update(packOutcome).set({ quantityRemaining: sql`${packOutcome.quantityRemaining} + 1` }).where(eq(packOutcome.id, o.id));
+      await tx.update(packVersion).set({ remainingOpenings: sql`${packVersion.remainingOpenings} + 1` }).where(eq(packVersion.id, pv.id));
       if (o.inventoryItemId) {
-        await tx.update(inventoryItem).set({ status: "IN_STOCK", ownerUserId: null }).where(eq(inventoryItem.id, item.id));
+        await tx.update(inventoryItem).set(live ? { status: "RESERVED", ownerUserId: null, reservedForType: "pack_version", reservedForId: pv.id, reservedAt: new Date() } : { status: "IN_STOCK", ownerUserId: null }).where(eq(inventoryItem.id, item.id));
       } else {
         await tx.update(inventoryItem).set({ status: "RETIRED", ownerUserId: null, notes: `Voided battle ${b.code}` }).where(eq(inventoryItem.id, item.id));
-        await tx.update(productSku).set({ pooledQuantity: sql`${productSku.pooledQuantity} + 1` }).where(eq(productSku.id, o.skuId));
+        await tx.update(productSku).set({ pooledQuantity: sql`${productSku.pooledQuantity} + 1`, pooledReserved: live ? sql`${productSku.pooledReserved} + 1` : productSku.pooledReserved }).where(eq(productSku.id, o.skuId));
       }
       await tx.update(opening).set({ status: "VOIDED", voidedAt: new Date(), voidReason: reason }).where(eq(opening.id, op.id));
       await enqueueOutbox(tx, "race.score", { sourceType: "REVERSAL", sourceId: op.id, originalSourceType: "OPENING", userId: op.userId, reason: "VOID", occurredAt: new Date().toISOString() });
