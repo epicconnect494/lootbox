@@ -50,7 +50,7 @@ export async function CustomerShell({ children }: { children: React.ReactNode })
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-40 flex h-14 items-center justify-between gap-3 border-b border-white/8 bg-ink-950/75 px-4 backdrop-blur md:h-16 md:px-8">
-          <Link href="/" className="font-display flex items-center gap-2 text-lg font-extrabold md:hidden">
+          <Link href="/" className="font-display flex min-w-0 shrink items-center gap-2 truncate text-lg font-extrabold md:hidden">
             <span className="inline-block h-5 w-5 rounded-md bg-gradient-to-br from-violet-500 to-cyan-400" aria-hidden />
             Lootbox <span className="text-iris">Vault</span>
           </Link>

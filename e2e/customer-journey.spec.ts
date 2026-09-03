@@ -94,7 +94,10 @@ test("register → verify → fund → open → reveal → vault → sell / ship
   await page.getByLabel("Address line 1").fill("1 Vault Way");
   await page.getByLabel("City").fill("Austin");
   await page.getByLabel("Postal code").fill("78701");
-  await page.getByLabel("Country").fill("US");
+  const countryInput = page.locator("input[name=country]");
+  if (await countryInput.count()) await countryInput.fill("US");
+  const countrySelect = page.locator("select[name=country]");
+  if (await countrySelect.count()) await countrySelect.selectOption("US");
   await page.getByRole("button", { name: /request shipping/i }).click();
   await expect(page.getByRole("button", { name: /request shipping/i })).toBeHidden({ timeout: 20_000 });
   const vault2 = await apiCall<{ items: Array<{ item: { status: string } }> }>(context, "GET", "/vault");

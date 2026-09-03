@@ -25,9 +25,9 @@ export function HeaderActions({ user, balance }: { user: { displayName: string; 
     );
   }
   return (
-    <div className="flex items-center gap-1 md:gap-2">
-      <Link href="/account#wallet" className="glass glass-strong tap flex items-center gap-2 rounded-xl px-3 text-sm font-semibold" aria-label={`Balance ${balance}`}>
-        <span className="text-ink-400">Balance</span>
+    <div className="flex min-w-0 shrink-0 items-center gap-0.5 md:gap-2">
+      <Link href="/account#wallet" className="glass glass-strong tap flex items-center gap-2 rounded-xl px-2.5 text-sm font-semibold md:px-3" aria-label={`Balance ${balance}`}>
+        <span className="hidden text-ink-400 md:inline">Balance</span>
         <span className="font-mono text-ink-100">{balance}</span>
       </Link>
       <Link href="/account#notifications" className="tap relative inline-flex items-center justify-center rounded-xl text-ink-300 hover:bg-white/5" aria-label={`Notifications${unread ? `, ${unread} unread` : ""}`}>
