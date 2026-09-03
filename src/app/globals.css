@@ -177,7 +177,7 @@ body {
   overflow-wrap: anywhere;
 }
 /* Flex/grid children default to min-width:auto, which lets long content widen the page; allow them to shrink so truncation and wrapping work. */
-#main :where(.flex > *, .grid > *, .inline-flex > *) {
+#main :where(.flex > *, .grid > *, .inline-flex > *):not(.tap) {
   min-width: 0;
 }
 
