@@ -1,4 +1,5 @@
 "use client";
+import { createPortal } from "react-dom";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Badge, Button, Field, Input, Select, Textarea } from "@/components/ui/primitives";
@@ -100,7 +101,9 @@ export function ExclusionPanel({ exclusions }: { exclusions: AccountOverview["ex
         </details>
       )}
 
-      {confirm && (
+      {/* Portaled so the sheet stacks above the fixed mobile navigation. */}
+      {confirm &&
+        createPortal(
         <div role="dialog" aria-modal="true" aria-labelledby="excl-confirm-title" className="fixed inset-0 z-[80] flex items-end justify-center bg-ink-950/80 p-4 backdrop-blur-sm md:items-center" onKeyDown={(e) => e.key === "Escape" && !busy && setConfirm(null)}>
           <div className="glass glass-strong rise w-full max-w-md space-y-3 p-5">
             <h3 id="excl-confirm-title" className="font-display text-xl font-extrabold">
@@ -116,8 +119,9 @@ export function ExclusionPanel({ exclusions }: { exclusions: AccountOverview["ex
               </Button>
             </div>
           </div>
-        </div>
-      )}
+        </div>,
+          document.body,
+        )}
     </div>
   );
 }

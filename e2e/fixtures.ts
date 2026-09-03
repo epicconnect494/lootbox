@@ -6,9 +6,9 @@ export async function blockExternal(ctx: BrowserContext) {
 }
 
 export const test = base.extend({
-  context: async ({ context }, use) => {
+  context: async ({ context }, provide) => {
     await blockExternal(context);
-    await use(context);
+    await provide(context);
   },
 });
 export { expect } from "@playwright/test";

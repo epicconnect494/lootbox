@@ -1,5 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { ArrowDown, ArrowUp, Plus, X } from "lucide-react";
 import { ItemArt } from "@/components/art/ItemArt";
@@ -278,7 +279,9 @@ export function BattleCreateForm({ packs, rules }: { packs: LivePack[]; rules: t
         </Panel>
       </aside>
 
-      {confirming && (
+      {/* Portaled to <body> so the sheet always stacks above the fixed mobile navigation. `confirming` can only become true after mount. */}
+      {confirming &&
+        createPortal(
         <div role="dialog" aria-modal="true" aria-labelledby="crazy-confirm-title" className="fixed inset-0 z-[80] flex items-end justify-center bg-ink-950/80 p-4 backdrop-blur-sm md:items-center" onKeyDown={(e) => e.key === "Escape" && !busy && setConfirming(false)}>
           <div className="glass glass-strong rise w-full max-w-md space-y-4 border-crazy-500/60 p-5 shadow-[var(--shadow-glow-crazy)]">
             <CrazyBanner />
@@ -295,8 +298,9 @@ export function BattleCreateForm({ packs, rules }: { packs: LivePack[]; rules: t
               </Button>
             </div>
           </div>
-        </div>
-      )}
+        </div>,
+          document.body,
+        )}
     </form>
   );
 }

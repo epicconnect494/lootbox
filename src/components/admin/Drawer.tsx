@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/primitives";
 
@@ -22,7 +23,7 @@ export function Drawer({ open, onClose, title, children, wide }: { open: boolean
     };
   }, [open, onClose]);
   if (!open) return null;
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[80] flex justify-end">
       <button type="button" aria-label="Close drawer" className="absolute inset-0 bg-ink-950/70 backdrop-blur-sm" onClick={onClose} />
       <div ref={ref} tabIndex={-1} role="dialog" aria-modal="true" aria-label={typeof title === "string" ? title : "Details"} className={`glass glass-strong rise relative flex h-full w-full flex-col overflow-hidden border-l border-white/10 ${wide ? "md:max-w-3xl" : "md:max-w-xl"}`} style={{ borderRadius: 0 }}>
@@ -34,6 +35,7 @@ export function Drawer({ open, onClose, title, children, wide }: { open: boolean
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

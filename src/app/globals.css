@@ -172,6 +172,11 @@ body {
   border: 0;
 }
 
+/* Long hashes, seeds and ids must never widen the viewport on small screens. */
+#main {
+  overflow-wrap: anywhere;
+}
+
 /* Tables */
 .table-wrap { overflow-x: auto; }
 .table-wrap table { min-width: 640px; width: 100%; border-collapse: collapse; }
